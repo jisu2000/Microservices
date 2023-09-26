@@ -1,0 +1,21 @@
+server:
+  port: 8082
+
+spring:
+  data:
+    mongodb:
+      port: 27017
+      database: microservice
+      
+      
+  application:
+    name: HOTEL-SERVICE
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:5000/eureka
