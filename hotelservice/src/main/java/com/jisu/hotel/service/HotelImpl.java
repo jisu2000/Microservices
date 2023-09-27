@@ -99,4 +99,13 @@ public class HotelImpl implements HotelService {
 
 	}
 
+	@Override
+	public String getHotelname(String id) {
+
+		Hotel hotel = (Hotel) this.repo.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("hotel not found"));
+
+		return hotel.getName();
+	}
+
 }

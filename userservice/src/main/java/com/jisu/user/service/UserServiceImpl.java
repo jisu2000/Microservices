@@ -13,6 +13,7 @@ import com.jisu.user.Model.Rating;
 import com.jisu.user.Model.User;
 import com.jisu.user.dao.UserDao;
 import com.jisu.user.exception.ResourceNotFoundException;
+import com.jisu.user.external.services.HotelService;
 import com.jisu.user.external.services.RatingService;
 
 @Service
@@ -26,6 +27,9 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private RatingService ratingService;
+
+	@Autowired
+	private HotelService hotelService;
 
 	@Override
 	public User saveUser(User u) {
@@ -54,6 +58,10 @@ public class UserServiceImpl implements UserService {
 			// }
 
 			List<Rating> ratingsList = Arrays.asList(ratings);
+			for (Rating r : ratingsList) {
+				String hotelname = this.hotelService.getHotelname(r.getHotelId());
+				r.setHotelName(hotelname);
+			}
 
 			u.setRatings(ratingsList);
 
@@ -73,6 +81,11 @@ public class UserServiceImpl implements UserService {
 		Rating[] ratings = ratingService.getRatings(user.getUserId());
 
 		List<Rating> ratingList = Arrays.asList(ratings);
+
+		for (Rating r : ratingList) {
+			String hotelname = this.hotelService.getHotelname(r.getHotelId());
+			r.setHotelName(hotelname);
+		}
 
 		user.setRatings(ratingList);
 
